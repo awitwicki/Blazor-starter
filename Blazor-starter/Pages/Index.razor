@@ -7,3 +7,24 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+
+<AuthorizeView>
+    <Authorized>
+        This content is displayed only if the user is Authorized
+    </Authorized>
+    <NotAuthorized>
+        This content is displayed if the user is Not Authorized
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView>
+    <Authorized>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All">
+                <span class="oi oi-power-standby" aria-hidden="true"></span> 
+                Logout (@context.User.Identity.)
+            </NavLink>
+        </li>
+    </Authorized>
+</AuthorizeView>

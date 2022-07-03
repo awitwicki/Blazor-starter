@@ -8,10 +8,15 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-
 <AuthorizeView>
     <Authorized>
         This content is displayed only if the user is Authorized
+
+        @if (@context.User.IsInRole(Consts.AdminRole))
+        {
+           <h1>You have <b>Admin</b> role</h1>
+        }
+
     </Authorized>
     <NotAuthorized>
         This content is displayed if the user is Not Authorized
@@ -20,11 +25,8 @@ Welcome to your new app.
 
 <AuthorizeView>
     <Authorized>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All">
-                <span class="oi oi-power-standby" aria-hidden="true"></span> 
-                Logout (@context.User.Identity.)
-            </NavLink>
-        </li>
+        <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All">
+            <span class="oi oi-power-standby" aria-hidden="true"></span> Logout 
+        </NavLink>
     </Authorized>
 </AuthorizeView>

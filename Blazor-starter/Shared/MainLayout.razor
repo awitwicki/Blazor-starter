@@ -3,15 +3,16 @@
 
 <PageTitle>Blazor-starter</PageTitle>
 
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(() => _drawerOpen = !_drawerOpen)"/>
         <MudText Typo="Typo.h6">Blazor starter</MudText>
+        <MudSpacer/>
+        <MudIconButton Icon="@themeBtnIcon" Color="Color.Inherit" OnClick="@(() => _isDarkMode = !_isDarkMode)" />
     </MudAppBar>
 
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="1">
@@ -30,10 +31,10 @@
 
 
 @code {
-    bool _drawerOpen = false;
+    private MudTheme _theme = new();
+    private bool _isDarkMode;
 
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
+    bool _drawerOpen = true;
+    
+    string themeBtnIcon => _isDarkMode ? Icons.Material.Filled.Brightness4 : Icons.Material.Filled.Brightness5;
 }

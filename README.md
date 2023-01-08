@@ -1,6 +1,6 @@
 # Blazor-starter
 
-.NET 6.0 Blazor based serverside web app with configured **Microsoft.AspNetCore.Identity** (login, register, roles)
+.NET 7.0 Blazor based serverside web app with configured **Microsoft.AspNetCore.Identity** (login, register, roles)
 
 ![License](https://img.shields.io/badge/License-Apache%20License%202.0-blue)
 ![Tests](https://img.shields.io/badge/dotnet%20version-6.0-blue)

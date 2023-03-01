@@ -19,15 +19,11 @@
             <input placeholder="Confirm password" asp-for="Input.ConfirmPassword" class="form-control" autocomplete="current-password" aria-required="true"/>
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
-        <div class="pass d-flex justify-end">
-            <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
-        </div>
         <div class="row button mt-4">
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </div>
         <div class="form-help-links mt-2 d-flex flex-column justify-end">
-            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
         </div>
     </form>
 </div>

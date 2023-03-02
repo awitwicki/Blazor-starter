@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@inject IJSRuntime Js
 
 <PageTitle>Blazor-starter</PageTitle>
 
@@ -7,34 +7,61 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(() => _drawerOpen = !_drawerOpen)"/>
-        <MudText Typo="Typo.h6">Blazor starter</MudText>
-        <MudSpacer/>
-        <MudIconButton Icon="@themeBtnIcon" Color="Color.Inherit" OnClick="@(() => _isDarkMode = !_isDarkMode)" />
-    </MudAppBar>
-
-    <MudDrawer @bind-Open="@_drawerOpen" Elevation="1">
-        <MudDrawerHeader>
+@if (_isThemeLoaded)
+{
+    <MudLayout>
+        <MudAppBar Elevation="1">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(() => _drawerOpen = !_drawerOpen)"/>
             <MudText Typo="Typo.h6">Blazor starter</MudText>
-        </MudDrawerHeader>
-        <NavMenu />
-    </MudDrawer>
+            <MudSpacer/>
+            <MudIconButton Icon="@ThemeBtnIcon" Color="Color.Inherit" OnClick="ToggleTheme"/>
+        </MudAppBar>
 
-    <MudMainContent Class="pt-16 px-16">
-        <MudContainer Class="mt-6">
-            @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+        <MudDrawer @bind-Open="@_drawerOpen" Elevation="1">
+            <MudDrawerHeader>
+                <MudText Typo="Typo.h6">Blazor starter</MudText>
+            </MudDrawerHeader>
+            <NavMenu/>
+        </MudDrawer>
 
+        <MudMainContent Class="pt-16 px-16">
+            <MudContainer Class="mt-6">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudLayout>
+}
 
 @code {
-    private MudTheme _theme = new();
+    private readonly MudTheme _theme = new();
     private bool _isDarkMode;
+    private bool _isThemeLoaded = false;
 
     bool _drawerOpen = true;
     
-    string themeBtnIcon => _isDarkMode ? Icons.Material.Filled.Brightness4 : Icons.Material.Filled.Brightness5;
+    string ThemeBtnIcon => _isDarkMode ? Icons.Material.Filled.Brightness4 : Icons.Material.Filled.Brightness5;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var isDarkModeStrFromLocalStorage = await Js.InvokeAsync<string>("readLocalStorage", "keyTheme");
+            if (!string.IsNullOrEmpty(isDarkModeStrFromLocalStorage))
+            {
+                @if (isDarkModeStrFromLocalStorage == "true")
+                {
+                    _isDarkMode = true;
+                }
+            }
+            
+            _isThemeLoaded = true;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ToggleTheme()
+    {
+        _isDarkMode = !_isDarkMode;
+        await Js.InvokeVoidAsync("addToLocalStorage", "keyTheme", _isDarkMode);
+    }
 }

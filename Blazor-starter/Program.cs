@@ -1,8 +1,5 @@
 using Blazor_starter;
 using Blazor_starter.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
@@ -10,11 +7,18 @@ using MudBlazor.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential 
+    // cookies is needed for a given request.
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
                  //.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")) Dont forget to create migration!
                    .UseInMemoryDatabase("InMemoryDb")
                    );
-
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
@@ -65,9 +69,9 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
+app.UseCookiePolicy();
 app.UseRouting();
 
 app.UseAuthentication();

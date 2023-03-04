@@ -124,3 +124,25 @@ form .signup-link a:hover{
 .text-danger{
     color: red;
 }
+
+#cookieConsent {
+    display: flex;
+    align-items: center;
+    background-color: rgba(13, 11, 34, 0.70);
+    color: #ccc;
+    padding: 8px 0 8px 30px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.accept-policy {
+    color: #fff;
+    padding: 5px 10px;
+    margin-left: 10px;
+    background: #16a085;
+    border: 1px solid #16a085;
+    cursor: pointer;
+    border-radius: 5px;
+}

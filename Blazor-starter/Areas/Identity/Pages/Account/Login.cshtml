@@ -1,6 +1,5 @@
 ﻿@page
 @model LoginModel
-
 @{
     ViewData["Title"] = "Log in";
 }
@@ -8,18 +7,19 @@
 <div class="wrapper">
     <div class="title"><span>Login</span></div>
     <form id="account" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <div class="row">
-            <input placeholder="Email" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"/>
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
         <div class="row mt-8">
-            <input placeholder="Password" asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true"/>
+            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
         <div class="mb-4 mt-8">
-            <label asp-for="Input.RememberMe" class="form-label d-flex align-center justify-end gap-1">
-                <input class="form-check-input" asp-for="Input.RememberMe"/>
-                <span>@Html.DisplayNameFor(m => m.Input.RememberMe)</span>
+            <label asp-for="Input.RememberMe" class="form-label">
+                <input class="form-check-input" asp-for="Input.RememberMe" />
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
             </label>
         </div>
         <div class="row button">
